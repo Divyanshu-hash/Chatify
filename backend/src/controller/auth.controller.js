@@ -25,10 +25,7 @@ export const signup = async (req, res) => {
 
         const salt= await bcrypt.genSalt(10);
 
-        console.log("password:", password);
-        console.log("typeof password:", typeof password);
-        console.log("salt:", salt);
-        console.log("typeof salt:", typeof salt);
+    
 
         const hashedPassword= await bcrypt.hash(password, salt);
         const newUser= new User({
@@ -38,8 +35,12 @@ export const signup = async (req, res) => {
 
         });
         if(newUser) {
-            generateToken(newUser._id, res);
-            await newUser.save();
+            // generateToken(newUser._id, res);
+            // await newUser.save();
+
+            // Persist user first, then issue auth cookie
+            const savedUser = await newUser.save();
+            generateToken(savedUser._id, res);
             res.status(201).json({
                 _id: newUser._id,
                 fullname: newUser.fullname,
