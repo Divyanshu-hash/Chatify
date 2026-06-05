@@ -3,6 +3,9 @@ import useKeyboardSound from "../hooks/useKeyboardSound";
 import { useChatStore } from "../store/useChatStore";
 import toast from "react-hot-toast";
 import { ImageIcon, SendIcon, XIcon } from "lucide-react";
+import MessagesLoadingSkeleton from "./MessagesLoadingSkeleton";
+
+
 
 function MessageInput() {
   const { playRandomKeyStrokeSound } = useKeyboardSound();
