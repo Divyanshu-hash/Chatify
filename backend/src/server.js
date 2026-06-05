@@ -8,12 +8,13 @@ import cookiesParser from 'cookie-parser';
 import authRoutes from './routes/auth.route.js';
 import messageRoutes from './routes/message.route.js';
 import { connectDB } from './lib/db.js';
+import { app, server } from "./lib/socket.js";
+
 
 
 
 const PORT= ENV.PORT || 3000;
 
-const app = express();
 
 app.use(express.json());
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
