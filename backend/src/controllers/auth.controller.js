@@ -8,9 +8,9 @@ import cloudinary from "../lib/cloudinary.js";
 
 
 export const signup = async (req, res) => {
-    const { fullname, email, password } = req.body;
+    const { fullName, email, password } = req.body;
     try {
-        if(!fullname || !email || !password) {
+        if(!fullName || !email || !password) {
             return res.status(400).json({ message: 'Please provide all required fields' });
         }
         if(password.length < 6) {
@@ -28,7 +28,7 @@ export const signup = async (req, res) => {
         const salt= await bcrypt.genSalt(10);
         const hashedPassword= await bcrypt.hash(password, salt);
         const newUser= new User({
-            fullname,
+            fullName,
             email,
             password: hashedPassword,
 
@@ -42,12 +42,12 @@ export const signup = async (req, res) => {
             generateToken(savedUser._id, res);
             res.status(201).json({
                 _id: newUser._id,
-                fullname: newUser.fullname,
+                fullName: newUser.fullName,
                 email: newUser.email,
                 ProfilePic: newUser.profilePic,
             });
             try {
-                await sendWelcomeEmail(savedUser.email, savedUser.fullname, ENV.CLIENT_URL);
+                await sendWelcomeEmail(savedUser.email, savedUser.fullName, ENV.CLIENT_URL);
             } catch (error) {
                 console.error("Failed to send welcome email:", error);
             }

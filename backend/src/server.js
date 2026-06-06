@@ -15,6 +15,7 @@ import { app, server } from "./lib/socket.js";
 
 const PORT= ENV.PORT || 3000;
 
+app.use(express.json({ limit: "5mb" })); // req.body
 
 app.use(express.json());
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
@@ -23,10 +24,10 @@ app.use(cookiesParser());
 
 
 app.use("/api/auth",authRoutes);
-app.use("/api/message",messageRoutes);
+app.use("/api/messages",messageRoutes);
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
 });
